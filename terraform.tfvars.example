@@ -1,0 +1,45 @@
+# Copy this file to terraform.tfvars and customize for your environment
+# DO NOT commit terraform.tfvars to version control
+
+# General Configuration
+aws_region   = "us-west-2"
+project_name = "analytics-platform"
+environment  = "dev"
+owner        = "your-team"
+
+# Domain Configuration
+domain_name       = "yourdomain.com"
+shiny_subdomain   = "shiny"
+rstudio_subdomain = "rstudio"
+
+# Network Configuration
+vpc_cidr               = "10.0.0.0/16"
+availability_zones     = ["us-west-2a", "us-west-2b"]
+public_subnet_cidrs    = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs   = ["10.0.10.0/24", "10.0.20.0/24"]
+
+# Compute Configuration
+shiny_instance_type   = "t3.medium"
+rstudio_instance_type = "t3.large"
+min_capacity          = 2
+max_capacity          = 10
+desired_capacity      = 2
+
+# Security Configuration
+enable_waf             = true
+enable_guardduty       = true
+enable_shield_advanced = false
+
+# Storage Configuration
+efs_performance_mode         = "generalPurpose"
+efs_throughput_mode         = "provisioned"
+efs_provisioned_throughput  = 500
+
+# Transfer Family Configuration (example)
+# sftp_users = [
+#   {
+#     username   = "analyst1"
+#     public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ..."
+#     home_dir   = "/data/analyst1"
+#   }
+# ]
