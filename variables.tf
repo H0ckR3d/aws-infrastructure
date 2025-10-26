@@ -146,3 +146,10 @@ variable "sftp_users" {
   }))
   default = []
 }
+
+# Development Testing Configuration
+variable "enable_debug_logging" {
+  description = "Enable debug logging for development environment"
+  type        = bool
+  default     = true
+}
