@@ -10,20 +10,25 @@ resource "random_string" "suffix" {
 }
 
 locals {
-  # Common tags
+  # Common tags for all resources
   common_tags = {
     Project     = var.project_name
     Environment = var.environment
     ManagedBy   = "Terraform"
     Owner       = var.owner
+    CreatedBy   = "dev-branch-test" # Added for branch testing
   }
 
-  # Naming convention
+  # Naming convention for consistent resource names
   name_prefix = "${var.project_name}-${var.environment}"
 
-  # Account and region info
+  # Account and region info from data sources
   account_id = data.aws_caller_identity.current.account_id
   region     = data.aws_region.current.name
+
+  # Development specific configurations
+  is_development = var.environment == "dev"
+  debug_enabled  = var.enable_debug_logging && local.is_development
 }
 
 # Networking Module
@@ -91,7 +96,7 @@ module "storage" {
   depends_on = [module.networking]
 }
 
-# ECS Cluster Module
+# ECS Cluster Module - Container orchestration for Shiny and RStudio
 module "ecs" {
   source = "./modules/ecs"
 
